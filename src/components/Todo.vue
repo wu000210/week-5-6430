@@ -1,6 +1,6 @@
 <template>
     <ul>
-        <li v-for="(todo, index) in todos" :key="index"
+        <li v-for="(index, todo) in todos" :key="index"
         @click="todoDone(index)">
          {{index}} - {{ todo }}
         </li>
@@ -8,7 +8,7 @@
 </template>
 <script>
 export default {
-    prop: {
+    props: {
       todos: {
         type: Array,
         required: true
@@ -23,4 +23,3 @@ methods: {
  }
 };
 </script>
-

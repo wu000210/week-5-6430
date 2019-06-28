@@ -11,11 +11,11 @@
 <script>
 import Todo from "@/components/Todo.vue";
 import TodoForm from "@/components/TodoForm.vue";
-
+import axios from "axios";
 export default{
     data() {
         return {
-            todoList: ["Walk the dog", "Go for a ride"]
+            todoList: []
         };
     },
     components: {
@@ -25,20 +25,46 @@ export default{
     methods: {
     appDeleteTodo(index) {
         this.todoList.splice(index, 1); 
+        axios.put(
+        "https://riqinwu-vue-and-axios.firebaseio.com/data.json",
+        this.todoList
+        );
     },
     addTodo(todo){
        this.todoList.push(todo);
+       axios
+       .put("https://riqinwu-vue-and-axios.firebaseio.com/data.json",
+        this.todoList
+        )
+       .then(response => {
+           console.log(response);
+           console.log("Your data was saved status: " +
+           response.status);
+       })       
+       .catch(error => {
+           console.log(error);
+       });
     }
-   }
+   },
+
+created() {
+    axios.get("https://riqinwu-vue-and-axios.firebaseio.com/data.json")
+    .then(response => {
+        console.log(response.data);
+        if(response.data) {
+          this.todoList = response.data; 
+        }     
+    })
+    .catch(error => {
+        console.log(" there are and error in getting data: "  + error.response);
+    });
+  }
 };
 </script>
-
-
-
-<style>
+<style scoped>
 ul {
     list-style: name;
-    with: 50%;
+    width: 50%;
     margin: 0, auto;
     }
     ul li{
@@ -47,7 +73,6 @@ ul {
         margin-bottom: 10px;
 
     }
-
-
 </style>
 
+npm 
