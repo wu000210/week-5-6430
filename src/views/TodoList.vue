@@ -61,7 +61,7 @@ created() {
   }
 };
 </script>
-<style scoped>
+<style>
 ul {
     list-style: name;
     width: 50%;
